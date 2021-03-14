@@ -20,7 +20,7 @@ def on_cmd_start(_: Client, message: Message):
     message.reply_text("Hi! Send me `/pixiv <link>` and I'll send you pics.", parse_mode='Markdown')
 
 
-@app.on_message(filters.command('pixiv') & filters.regex(PIXIV_LINK_PATTERN))
+@app.on_message(filters.command('pixiv') & filters.regex(PIXIV_LINK_PATTERN) & ~filters.edited)
 def on_cmd_pixiv(_: Client, message: Message):
     artwork_id = PIXIV_LINK_PATTERN.search(message.text).groups()[-1]
     response = requests.get(f'https://www.pixiv.net/en/artworks/{artwork_id}')
